@@ -65,7 +65,9 @@ const UserService = {
         ['lo siento', 6],
         ['si', 'yes', 7],
         ['perro', 'dog', 8],
-        ['gato', 'cat', null],
+        ['gato', 'cat', 9],
+        ['computadora', 'computer', 10],
+        ['tienda', 'store', null],
       ]
 
       const [languageHeadId] = await trx
