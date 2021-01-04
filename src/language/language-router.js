@@ -1,10 +1,12 @@
 const express = require('express')
 const LanguageService = require('./language-service')
+const { LinkedList, toArray, _Node } = require("../../linkedList")
 const { requireAuth } = require('../middleware/jwt-auth')
 
 const languageRouter = express.Router()
 
 languageRouter
+  // requires authentication (Bearer token)
   .use(requireAuth)
   .use(async (req, res, next) => {
     try {
@@ -46,12 +48,15 @@ languageRouter
 languageRouter
   .get('/head', async (req, res, next) => {
     // implement me
+    // want to return nextWord, correctCount, wrongCount, and totalScore as object 
     res.send('implement me!')
   })
 
 languageRouter
   .post('/guess', async (req, res, next) => {
     // implement me
+    // user posting a guess
+    // want to return nextWord, correctcount, wrongcount, totalScore, answer, and iscorrect as object
     res.send('implement me!')
   })
 

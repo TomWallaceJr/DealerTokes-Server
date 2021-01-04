@@ -28,6 +28,18 @@ const LanguageService = {
       )
       .where({ language_id })
   },
+
+  // createLinkedlist method
+
+
+  // getNextWord Method
+
+
+  // checkGuess Method
+
+
+  // updateWordsTable method
+
 }
 
 module.exports = LanguageService
