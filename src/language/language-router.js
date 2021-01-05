@@ -46,14 +46,6 @@ languageRouter
   })
 
 languageRouter.get("/head", async (req, res, next) => {
-  // implement me
-  //example response:
-  //    {
-  //   "nextWord": "Testnextword",
-  //   "wordCorrectCount": 222,
-  //   "wordIncorrectCount": 333,
-  //   "totalScore": 999
-  // }
   try {
     const [nextWord] = await LanguageService.getNextWord(
       req.app.get("db"),
