@@ -1,4 +1,4 @@
-const { LinkedList, toArray } = require("../../linkedList");
+const { LinkedList, toArray, _Node } = require("../../linkedList");
 
 const LanguageService = {
   getUsersLanguage(db, user_id) {
@@ -30,28 +30,8 @@ const LanguageService = {
       )
       .where({ language_id });
   },
-  getNextWord(db, language_id) {
-    return db
-      .from("word")
-      .join("language", "word.id", "=", "language.head")
-      .select("original", "language_id", "correct_count", "incorrect_count")
-      .where({ language_id });
-  },
-  getLanguageHead(db, language_id) {
-    return db
-      .from("language")
-      .join("word", "word.language_id", "=", "language.id")
-      .select("head")
-      .groupBy("head")
-      .where({ language_id });
-  },
-  checkGuess(db, language_id) {
-    return db
-      .from("word")
-      .join("language", "word.id", "=", "language.head")
-      .select("*")
-      .where({ language_id });
-  },
+
+  // creates linked list of words
   createLinkedList(words, head) {
     const headObj = words.find((word) => word.id === head);
     const headIndex = words.indexOf(headObj);
@@ -76,6 +56,35 @@ const LanguageService = {
     }
     return list;
   },
+
+
+  getLanguageHead(db, language_id) {
+    return db
+      .from("language")
+      .join("word", "word.language_id", "=", "language.id")
+      .select("head")
+      .groupBy("head")
+      .where({ language_id });
+  },
+
+  checkGuess(db, language_id) {
+    return db
+      .from("word")
+      .join("language", "word.id", "=", "language.head")
+      .select("*")
+      .where({ language_id });
+  },
+
+  getNextWord(db, language_id) {
+    return db
+      .from("word")
+      .join("language", "word.id", "=", "language.head")
+      .select("original", "language_id", "correct_count", "incorrect_count")
+      .where({ language_id });
+  },
+
+
+
   updateWordsTable(db, words, language_id, total_score) {
     return db.transaction(async (trx) => {
       return Promise.all([
