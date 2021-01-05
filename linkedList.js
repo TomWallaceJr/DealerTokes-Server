@@ -84,6 +84,7 @@ class LinkedList {
     }
 }
 
+// pushes each linked list item into an array and returns array
 function toArray(linkedList) {
     let currentNode = linkedList.head;
     let result = [];
@@ -98,5 +99,4 @@ function toArray(linkedList) {
 module.exports = {
     LinkedList,
     toArray,
-    _Node,
 };
