@@ -113,6 +113,8 @@ languageRouter.post("/guess", bodyParser, async (req, res, next) => {
         temp.value.next = temp.next.value.id;
       }
       req.language.total_score++;
+
+      // updates word array
       await LanguageService.updateWordsTable(
         req.app.get("db"),
         toArray(list),
@@ -124,6 +126,7 @@ languageRouter.post("/guess", bodyParser, async (req, res, next) => {
         totalScore: req.language.total_score,
         wordCorrectCount: list.head.value.correct_count,
         wordIncorrectCount: list.head.value.incorrect_count,
+        // answer value when word is los siento is coming up '6' ???
         answer: temp.value.translation,
         isCorrect: true,
       });
