@@ -62,7 +62,7 @@ const UserService = {
         ['adios', 'goodbye', 3],
         ['por favor', 'please', 4],
         ['gracias', 'thank you', 5],
-        ['lo siento', 6],
+        ['lo siento', 'lo siento', 6],
         ['si', 'yes', 7],
         ['perro', 'dog', 8],
         ['gato', 'cat', 9],
