@@ -52,6 +52,7 @@ languageRouter.get("/head", async (req, res, next) => {
       req.language.id
     );
     res.json({
+      // next word only words 1-5 never gets to 6-10?
       nextWord: nextWord.original,
       totalScore: req.language.total_score,
       wordCorrectCount: nextWord.correct_count,
