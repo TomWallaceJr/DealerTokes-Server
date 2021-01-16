@@ -13,6 +13,13 @@ const app = express();
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
   skip: () => NODE_ENV === 'test',
 }));
+
+const corsOptions = {
+  origin: true,
+  credentials: true
+}
+app.options('*', cors(corsOptions)); // preflight OPTIONS; put before other routes
+
 app.use(cors());
 app.use(helmet());
 
