@@ -29,7 +29,7 @@ userRouter
       if (hasUserWithUserName)
         return res.status(400).json({ error: `Username already taken` })
 
-      const hashedPassword = await  UserService.hashPassword(password)
+      const hashedPassword = await UserService.hashPassword(password)
 
       const newUser = {
         username,
@@ -42,16 +42,11 @@ userRouter
         newUser
       )
 
-      await UserService.populateUserWords(
-        req.app.get('db'),
-        user.id
-      )
-
       res
         .status(201)
         .location(path.posix.join(req.originalUrl, `/${user.id}`))
         .json(UserService.serializeUser(user))
-    } catch(error) {
+    } catch (error) {
       next(error)
     }
   })
