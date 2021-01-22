@@ -6,13 +6,11 @@ TRUNCATE
 
 INSERT INTO "user" ("id", "username", "name", "password")
 VALUES
-  (
-    1,
-    'JD123',
-    'John Doe',
-    -- password = "pass"
-    '$2a$10$fCWkaGbt7ZErxaxclioLteLUgg4Q3Rp09WW0s/wSLxDKYsaGYUpjG'
+  (1, 'JD123', 'John Doe', -- password = "pass"
+  '$2a$10$fCWkaGbt7ZErxaxclioLteLUgg4Q3Rp09WW0s/wSLxDKYsaGYUpjG'
   );
+
+  SELECT setval('user_id_seq', 1, true);
 
 INSERT INTO "workdays" ("id", "hours", "downs", "tokes", "date", "notes", "user_id")
 VALUES
@@ -37,6 +35,8 @@ VALUES
   (20, 8, 13, 299, '2021-01-03', 'full shift 4 breaks', 1),
   (21, 4, 13, 120, '2021-01-04', 'full shift 4 breaks', 1),
   (22, 5, 13, 92, '2021-01-09', 'full shift 4 breaks', 1);
+
+  SELECT setval('workdays_id_seq', 22, true);
 
 
 COMMIT;
