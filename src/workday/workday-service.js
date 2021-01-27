@@ -7,7 +7,7 @@ const WorkdayService = {
     insertNewWorkday(knex, newEntry) {
         return knex
             .insert(newEntry)
-            .into('workday')
+            .into('workdays')
             .returning('*')
             .then(rows => {
                 return rows[0]

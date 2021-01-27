@@ -50,7 +50,7 @@ workdayRouter
             .then(entry => {
                 res
                     .status(201)
-                    .location(path.posix.join(req.originalUrl, `/${entryid}`))
+                    .location(path.posix.join(req.originalUrl, `/${newWorkday.id}`))
                     .json(serializeWorkday(entry))
             })
             .catch(next)
