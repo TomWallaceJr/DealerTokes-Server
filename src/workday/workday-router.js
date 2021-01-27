@@ -61,7 +61,7 @@ workdayRouter
     .route('/:user_id')
     .all((req, res, next) => {
         const knex = req.app.get('db');
-        UserService.hasUserWithUserName(
+        UserService.getById(
             knex,
             req.params.user_id
         )
