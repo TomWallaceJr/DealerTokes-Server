@@ -28,6 +28,33 @@ workdayRouter
             })
             .catch(next)
     })
+    .post(jsonParser, (req, res, next) => {
+        const { hours, downs, tokes, notes, date, user_id } = req.body;
+        const newWorkday = { hours, downs, tokes, notes, date, user_id };
+
+        for (const [key, value] of Object.entries(newWorkday))
+            if (value == null)
+                return res.status(400).json({
+                    error: { message: `Missing ${key} in request body` }
+                });
+
+        newWorkday.hours = hours;
+        newWorkday.downs = downs;
+        newWorkday.tokes = tokes;
+        newWorkday.notes = notes;
+        newWorkday.date = date;
+        newWorkday.user_id = user_id;
+
+        const knex = req.app.get('db');
+        WorkdayService.insertNewWorkday(knex, newWorkday)
+            .then(entry => {
+                res
+                    .status(201)
+                    .location(path.posix.join(req.originalUrl, `/${entryid}`))
+                    .json(serializeWorkday(entry))
+            })
+            .catch(next)
+    })
 
 
 module.exports = workdayRouter;
