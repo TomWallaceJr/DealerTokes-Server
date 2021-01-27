@@ -56,5 +56,35 @@ workdayRouter
             .catch(next)
     })
 
+workdayRouter
+    .route('/:user_id')
+    .all((req, res, next) => {
+        const knex = req.app.get('db');
+        WorkdayService.getById(
+            knex,
+            req.params.user_id
+        )
+            .then(user => {
+                if (!user) {
+                    return res.status(404).json({
+                        error: { message: `User does not exist` }
+                    })
+                }
+                res.user = user
+                next()
+            })
+            .catch(next)
+    })
+    .get((req, res, next) => {
+        const knex = req.app.get('db');
+        WorkdayService.getWorkdaysById(
+            knex,
+            req.params.user_id
+        )
+            .then(workdays => {
+                res.json(workdays.map(serializeWorkday))
+            })
+            .catch(next)
+    })
 
 module.exports = workdayRouter;
