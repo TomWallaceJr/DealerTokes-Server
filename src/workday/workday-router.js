@@ -3,6 +3,7 @@ const WorkdayService = require('./workday-service');
 const path = require('path');
 const jsonParser = express.json();
 const xss = require('xss');
+const UserService = require('../user/user-service');
 const workdayRouter = express.Router();
 
 const serializeWorkday = workday => ({
@@ -60,7 +61,7 @@ workdayRouter
     .route('/:user_id')
     .all((req, res, next) => {
         const knex = req.app.get('db');
-        WorkdayService.getById(
+        UserService.hasUserWithUserName(
             knex,
             req.params.user_id
         )

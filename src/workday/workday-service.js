@@ -12,6 +12,14 @@ const WorkdayService = {
             .then(rows => {
                 return rows[0]
             })
+    },
+
+    getWorkdaysById(knex, user_id) {
+        return knex
+            .from('workdays')
+            .select('*')
+            .where('user_id', user_id)
+            .orderBy('date')
     }
 }
 
