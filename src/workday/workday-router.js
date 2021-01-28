@@ -100,4 +100,38 @@ workdayRouter
             .catch(next)
     })
 
+// trying endpoint to delete specific workdays but route keeps getting read as 
+// '/:user_id' this endpoint '/user_id/workday_id' also not working
+// will probably need another router?
+workdayRouter
+    .route('/:workday_id')
+    .all((req, res, next) => {
+        const knex = req.app.get('db');
+        WorkdayService.getById(
+            knex,
+            req.params.workday_id
+        )
+            .then(workday => {
+                if (!workday) {
+                    return res.status(404).json({
+                        error: { message: `Workday does not exist` }
+                    })
+                }
+                res.workday = workday
+                next()
+            })
+            .catch(next)
+    })
+    .delete((req, res, next) => {
+        const knex = req.app.get('db');
+        WorkdayService.deleteWorkday(
+            knex,
+            req.params.workday_id
+        )
+            .then(numRowsAffected => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
+
 module.exports = workdayRouter;

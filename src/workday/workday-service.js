@@ -1,4 +1,12 @@
 const WorkdayService = {
+    getById(knex, id) {
+        return knex
+            .from('workdays')
+            .select('*')
+            .where('id', id)
+            .first()
+    },
+
     getAllWorkdays(knex) {
         return knex.select('*')
             .from('workdays')
@@ -26,6 +34,14 @@ const WorkdayService = {
         return knex
             .from('workdays')
             .where('user_id', id)
+            .delete()
+    },
+
+    // attempting to delete just specific workday
+    deleteWorkday(knex, id) {
+        return knex
+            .from('workdays')
+            .where('id', id)
             .delete()
     }
 }
