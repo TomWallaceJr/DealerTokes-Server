@@ -20,6 +20,13 @@ const WorkdayService = {
             .select('*')
             .where('user_id', user_id)
             .orderBy('date')
+    },
+
+    deleteAllWorkdays(knex, id) {
+        return knex
+            .from('workdays')
+            .where('user_id', id)
+            .delete()
     }
 }
 

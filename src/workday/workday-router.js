@@ -87,5 +87,17 @@ workdayRouter
             })
             .catch(next)
     })
+    // WILL DELETE ALL WORKDAYS FOR CURRENT USER
+    .delete((req, res, next) => {
+        const knex = req.app.get('db');
+        WorkdayService.deleteAllWorkdays(
+            knex,
+            req.params.user_id
+        )
+            .then(numRowsAffected => {
+                res.status(204).end()
+            })
+            .catch(next)
+    })
 
 module.exports = workdayRouter;
