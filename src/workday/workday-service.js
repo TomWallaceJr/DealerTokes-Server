@@ -9,7 +9,7 @@ const WorkdayService = {
 
     findByDate(knex, date) {
         return knex
-            .from(workdays)
+            .from('workdays')
             .select('*')
             .where('date', date)
             .first()

@@ -32,6 +32,7 @@ workdayRouter
     .post(jsonParser, (req, res, next) => {
         const { date, downs, tokes, notes, hours, user_id } = req.body;
         const newWorkday = { hours, downs, tokes, notes, date, user_id };
+        const knex = req.app.get('db');
 
         for (const [key, value] of Object.entries(newWorkday))
             if (value == null)
@@ -40,6 +41,15 @@ workdayRouter
                 });
 
         // if date already exists in DB reject
+        WorkdayService.findByDate(knex, date)
+            .then(entry => {
+                if (entry)
+                    return res.status(400).json({
+                        error: { message: `Duplicate Date Not Allowed` }
+                    })
+            })
+
+
 
         newWorkday.hours = hours;
         newWorkday.downs = downs;
@@ -48,7 +58,7 @@ workdayRouter
         newWorkday.date = date;
         newWorkday.user_id = user_id;
 
-        const knex = req.app.get('db');
+
         WorkdayService.insertNewWorkday(knex, newWorkday)
             .then(entry => {
                 res
