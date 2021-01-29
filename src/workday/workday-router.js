@@ -30,7 +30,7 @@ workdayRouter
             .catch(next)
     })
     .post(jsonParser, (req, res, next) => {
-        const { hours, downs, tokes, notes, date, user_id } = req.body;
+        const { date, downs, tokes, notes, hours, user_id } = req.body;
         const newWorkday = { hours, downs, tokes, notes, date, user_id };
 
         for (const [key, value] of Object.entries(newWorkday))
@@ -38,6 +38,8 @@ workdayRouter
                 return res.status(400).json({
                     error: { message: `Missing ${key} in request body` }
                 });
+
+        // if date already exists in DB reject
 
         newWorkday.hours = hours;
         newWorkday.downs = downs;

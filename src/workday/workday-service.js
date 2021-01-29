@@ -7,6 +7,14 @@ const WorkdayService = {
             .first()
     },
 
+    findByDate(knex, date) {
+        return knex
+            .from(workdays)
+            .select('*')
+            .where('date', date)
+            .first()
+    },
+
     getAllWorkdays(knex) {
         return knex.select('*')
             .from('workdays')
