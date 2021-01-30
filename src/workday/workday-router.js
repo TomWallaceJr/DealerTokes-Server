@@ -116,32 +116,38 @@ workdayRouter
 // '/:user_id' this endpoint '/user_id/workday_id' also not working
 // will probably need another router?
 workdayRouter
-    .route('/:workday_id')
+    .route('/:user_id/date/:date')
     .all((req, res, next) => {
         const knex = req.app.get('db');
-        WorkdayService.getById(
+        UserService.getById(
             knex,
-            req.params.workday_id
+            req.params.user_id
         )
-            .then(workday => {
-                if (!workday) {
+            .then(user => {
+                if (!user) {
                     return res.status(404).json({
-                        error: { message: `Workday does not exist` }
+                        error: { message: `User does not exist` }
                     })
                 }
-                res.workday = workday
+                res.user = user
                 next()
             })
             .catch(next)
     })
-    .delete((req, res, next) => {
+    .get((req, res, next) => {
         const knex = req.app.get('db');
-        WorkdayService.deleteWorkday(
+        WorkdayService.getByDate(
             knex,
-            req.params.workday_id
+            req.params.user_id,
+            req.params.date
         )
-            .then(numRowsAffected => {
-                res.status(204).end()
+            .then(workday => {
+                if (!workday) {
+                    return res.status(400).json({
+                        error: { message: 'Workday Does Not Exist' }
+                    })
+                }
+                res.json(workday)
             })
             .catch(next)
     })

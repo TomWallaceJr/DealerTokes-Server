@@ -7,12 +7,12 @@ const WorkdayService = {
             .first()
     },
 
-    findByUserAndDate(knex, date, user_id) {
+    getByDate(knex, user_id, date) {
         return knex
             .from('workdays')
             .select('*')
-            .where('id', user_id)
-            .where('date', date)
+            .where('user_id', user_id)
+            .andWhere('date', date)
             .first()
     },
 
