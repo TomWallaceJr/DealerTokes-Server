@@ -34,22 +34,13 @@ workdayRouter
         const newWorkday = { hours, downs, tokes, notes, date, user_id };
         const knex = req.app.get('db');
 
-        for (const [key, value] of Object.entries(newWorkday))
-            if (value == null)
+        for (const [key, value] of Object.entries(newWorkday)) {
+            if (value == null) {
                 return res.status(400).json({
                     error: { message: `Missing ${key} in request body` }
                 });
-
-        // if date already exists in DB reject
-        WorkdayService.findByDate(knex, date)
-            .then(entry => {
-                if (entry)
-                    return res.status(400).json({
-                        error: { message: `Duplicate Date Not Allowed` }
-                    })
-            })
-
-
+            }
+        }
 
         newWorkday.hours = hours;
         newWorkday.downs = downs;
@@ -58,7 +49,6 @@ workdayRouter
         newWorkday.date = date;
         newWorkday.user_id = user_id;
 
-
         WorkdayService.insertNewWorkday(knex, newWorkday)
             .then(entry => {
                 res
@@ -66,8 +56,18 @@ workdayRouter
                     .location(path.posix.join(req.originalUrl, `/${newWorkday.id}`))
                     .json(serializeWorkday(entry))
             })
-            .catch(next)
+            .catch(e => {
+                if (e.code === "23505") {
+                    res.status(400).json({
+                        error: { message: "Duplicate Dates" }
+                    })
+                } else {
+                    next(e)
+                }
+            })
+
     })
+
 
 workdayRouter
     .route('/:user_id')

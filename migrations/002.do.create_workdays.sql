@@ -6,5 +6,6 @@ CREATE TABLE "workdays" (
   "date" DATE NOT NULL,
   "notes" TEXT,
   "user_id" INTEGER REFERENCES "user"(id)
-    ON DELETE CASCADE NOT NULL
+    ON DELETE CASCADE NOT NULL,
+  UNIQUE(date, user_id)
 );
