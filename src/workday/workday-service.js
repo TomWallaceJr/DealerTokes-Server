@@ -21,6 +21,15 @@ const WorkdayService = {
             .from('workdays')
     },
 
+    getTokesFromWorkday(knex, user_id, date) {
+        return knex
+            .select('tokes')
+            .from('workdays')
+            .where('user_id', user_id)
+            .andWhere('date', date)
+            .first()
+    },
+
     insertNewWorkday(knex, newEntry) {
         return knex
             .insert(newEntry)

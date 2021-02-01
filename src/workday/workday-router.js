@@ -136,7 +136,7 @@ workdayRouter
     })
     .get((req, res, next) => {
         const knex = req.app.get('db');
-        WorkdayService.getByDate(
+        WorkdayService.getTokesFromWorkday(
             knex,
             req.params.user_id,
             req.params.date
