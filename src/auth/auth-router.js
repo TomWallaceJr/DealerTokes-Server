@@ -1,6 +1,7 @@
 const express = require('express')
 const AuthService = require('./auth-service')
 const { requireAuth } = require('../middleware/jwt-auth')
+const WorkdayService = require('../workday/workday-service')
 
 const authRouter = express.Router()
 const jsonBodyParser = express.json()
@@ -38,10 +39,17 @@ authRouter
           error: 'Incorrect username or password',
         })
 
+      // get workdays for user
+      // const userWorkdays = WorkdayService.getWorkdaysById(
+      //   req.app.get('db'),
+      //   dbUser.id
+      // )
+
       const sub = dbUser.username
       const payload = {
         user_id: dbUser.id,
         name: dbUser.name,
+        // workdays: userWorkdays
       }
       res.send({
         authToken: AuthService.createJwt(sub, payload),
@@ -56,6 +64,7 @@ authRouter
     const payload = {
       user_id: req.user.id,
       name: req.user.name,
+      // need to give workdays here?
     }
     res.send({
       authToken: AuthService.createJwt(sub, payload),

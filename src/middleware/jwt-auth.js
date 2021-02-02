@@ -1,5 +1,6 @@
 const { JsonWebTokenError } = require('jsonwebtoken')
 const AuthService = require('../auth/auth-service')
+const WorkdayService = require('../workday/workday-service')
 
 async function requireAuth(req, res, next) {
   const authToken = req.get('Authorization') || ''
@@ -19,10 +20,20 @@ async function requireAuth(req, res, next) {
       payload.sub,
     )
 
-    if (!user)
+    if (!user) {
       return res.status(401).json({ error: 'Unauthorized request' })
+    }
+
+    // get user workdays and send them here
+    // const user_id = user.user_id
+    // const workdays = WorkdayService.getWorkdaysById(
+    //   req.app.get('db'),
+    //   user_id
+    // )
+
 
     req.user = user
+    // req.workdays = workdays
     next()
   } catch (error) {
     if (error instanceof JsonWebTokenError)
