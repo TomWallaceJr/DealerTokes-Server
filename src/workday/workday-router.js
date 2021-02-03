@@ -16,7 +16,6 @@ const serializeWorkday = workday => ({
     user_id: workday.user_id
 })
 
-
 workdayRouter
     .route('/')
     // this get route probably wont be used unless its an admin 
@@ -68,7 +67,6 @@ workdayRouter
 
     })
 
-
 workdayRouter
     .route('/:user_id')
     .all((req, res, next) => {
@@ -112,9 +110,6 @@ workdayRouter
             .catch(next)
     })
 
-// trying endpoint to delete specific workdays but route keeps getting read as 
-// '/:user_id' this endpoint '/user_id/workday_id' also not working
-// will probably need another router?
 workdayRouter
     .route('/:user_id/date/:date')
     .all((req, res, next) => {

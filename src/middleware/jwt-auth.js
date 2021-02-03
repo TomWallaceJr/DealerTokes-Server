@@ -24,16 +24,14 @@ async function requireAuth(req, res, next) {
       return res.status(401).json({ error: 'Unauthorized request' })
     }
 
-    // get user workdays and send them here
-    // const user_id = user.user_id
-    // const workdays = WorkdayService.getWorkdaysById(
-    //   req.app.get('db'),
-    //   user_id
-    // )
-
-
+    // get user workdays and send them here ?
+    const user_id = user.user_id
+    const workdays = WorkdayService.getWorkdaysById(
+      req.app.get('db'),
+      user_id
+    )
     req.user = user
-    // req.workdays = workdays
+    req.workdays = workdays
     next()
   } catch (error) {
     if (error instanceof JsonWebTokenError)
