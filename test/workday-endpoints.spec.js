@@ -1,7 +1,7 @@
 const app = require('../src/app')
 const helpers = require('./helpers')
 
-describe('Language Endpoints', function () {
+describe('Workday Endpoints', function () {
   let db
 
   const testUsers = helpers.makeUsersArray()
@@ -20,7 +20,7 @@ describe('Language Endpoints', function () {
   afterEach('cleanup', () => helpers.cleanTables(db))
 
 
-  describe(`GET /api/workdays`, () => {
+  describe(`GET /api/workday`, () => {
     it(`responds with 201 and all workdays`, () => {
       return supertest(app)
         .get(`/api/workdays`)
@@ -28,14 +28,13 @@ describe('Language Endpoints', function () {
         .expect(201)
         .expect(res => {
           expect(res.body).to.have.keys('workdays')
-
-          expect(res.body.language).to.have.property('id', testUser.id)
-          expect(res.body.language).to.have.property('hours', testUser.name)
-          expect(res.body.language).to.have.property('user_id', testUser.user_id)
-          expect(res.body.language).to.have.property('tokes', testUser.tokes)
-          expect(res.body.language).to.have.property('downs', testUser.downs)
+          expect(res.body.workday).to.have.property('id', testUser.id)
+          expect(res.body.workday).to.have.property('hours', testUser.name)
+          expect(res.body.workday).to.have.property('user_id', testUser.user_id)
+          expect(res.body.workday).to.have.property('tokes', testUser.tokes)
+          expect(res.body.workday).to.have.property('downs', testUser.downs)
             .which.is.not.null
-          expect(res.body.language).to.have.property('notes', testUser.notes)
+          expect(res.body.workday).to.have.property('notes', testUser.notes)
         })
     })
   })
@@ -43,7 +42,7 @@ describe('Language Endpoints', function () {
 
 
 
-describe(`POST /api/workdays`, () => {
+describe(`POST /api/workday`, () => {
   const [testWorkdays] = helpers.makeWorkdays()
   const testUsers = helpers.makeUsersArray()
   const [testUser] = testUsers
@@ -54,7 +53,7 @@ describe(`POST /api/workdays`, () => {
     app.set('db', db)
   })
 
-  beforeEach('insert users, languages and words', () => {
+  beforeEach('insert users, and workdays', () => {
     return helpers.seedUsersWorkdays(
       db,
       testUsers,
@@ -62,13 +61,13 @@ describe(`POST /api/workdays`, () => {
     )
   })
 
-  it.skip(`responds with 400 required error when tokes is missing`, () => {
+  it(`responds with 400 required error when tokes is missing`, () => {
     const postBody = {
       randomField: 'test random field',
     }
 
     return supertest(app)
-      .post(`/api/workdays`)
+      .post(`/api/workday`)
       .set('Authorization', helpers.makeAuthHeader(testUser))
       .send(postBody)
       .expect(400, {
@@ -87,7 +86,7 @@ describe(`POST /api/workdays`, () => {
       user_id: 1
     }
     return supertest(app)
-      .post(`/api/workdays`)
+      .post(`/api/workday`)
       .set('Authorization', helpers.makeAuthHeader(testUser))
       .send(correctPostBody)
       .expect(200)
