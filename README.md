@@ -16,77 +16,77 @@ The user may view their statement page which will calculate how much in tokes th
 
 
 # API DOCUMENTATION
-Example req/res requests
+# Example req/res requests
 
-POST /api/user
-*creates a new user and puts them in DB*
-REQ BODY: {
-    "username": "JohnnyBoy",
-    "password": "Password123!",
-    "name": "John Smith
-}
-
-Response:
-[
-    "username": "JohnnyBoy",
-    "name": "John Smith",
-]
-
+POST /api/user <br />
+*creates a new user and puts them in DB*<br />
+REQ BODY: {<br />
+    "username": "JohnnyBoy",<br />
+    "password": "Password123!",<br />
+    "name": "John Smith<br />
+}<br />
+<br />
+Response:<br />
+[<br />
+    "username": "JohnnyBoy",<br />
+    "name": "John Smith",<br />
+]<br />
+<br />
 GET /api/workday/2  <br />
-*returns all users workdays* 
+*returns all users workdays* <br />
+<br />
+Response:<br />
 
-Response:
-[
-{
-    "id": 1,
-        "hours": "5",
-        "downs": "5",
-        "tokes": "120",
-        "notes": "YEEHAW",
-        "date": "2021-02-01T00:00:00.000Z",
-        "user_id": 2
-},
-{
-        "id": 3,
-        "hours": "8",
-        "downs": "13",
-        "tokes": "342",
-        "notes": "Busy",
-        "date": "2021-01-31T00:00:00.000Z",
-        "user_id": 2
-    },
-    etc .... will return all users workdays
-]
+{<br />
+    "id": 1,<br />
+        "hours": "5",<br />
+        "downs": "5",<br />
+        "tokes": "120",<br />
+        "notes": "YEEHAW",<br />
+        "date": "2021-02-01T00:00:00.000Z",<br />
+        "user_id": 2<br />
+},<br />
+{<br />
+        "id": 3,<br />
+        "hours": "8",<br />
+        "downs": "13",<br />
+        "tokes": "342",<br />
+        "notes": "Busy",<br />
+        "date": "2021-01-31T00:00:00.000Z",<br />
+        "user_id": 2<br />
+    },<br />
+    etc .... will return all users workdays<br />
+]<br />
+<br />
+DELETE /api/workday/2<br />
+*will delete ALL USERS WORKDAYS*<br />
+<br />
+DELETE /api/workday/2/date/2020-2-2<br />
+*Will Delete current users workday from that specific date*<br />
+<br />
+POST /api/workday<br />
+*Enters a new workday into DB*<br />
+REQ BODY: {<br />
+        "hours": "4",<br />
+        "downs": "5",<br />
+        "tokes": "58",<br />
+        "notes": "Slow",<br />
+        "date": "2021-01-19",<br />
+        "user_id": 2<br />
+}<br />
+<br />
+Response:<br />
+{<br />
+    "id": 14,<br />
+    "hours": "5",<br />
+    "downs": "4",<br />
+    "tokes": "58",<br />
+    "notes": "Slow",<br />
+    "date": "2021-02-04T00:00:00.000Z",<br />
+    "user_id": 2<br />
+}<br />
 
-DELETE /api/workday/2
-*will delete ALL USERS WORKDAYS*
-
-DELETE /api/workday/2/date/2020-2-2
-*Will Delete current users workday from that specific date*
-
-POST /api/workday
-*Enters a new workday into DB*
-REQ BODY: {
-        "hours": "4",
-        "downs": "5",
-        "tokes": "58",
-        "notes": "Slow",
-        "date": "2021-01-19",
-        "user_id": 2
-}
-
-Response:
-{
-    "id": 14,
-    "hours": "5",
-    "downs": "4",
-    "tokes": "58",
-    "notes": "Slow",
-    "date": "2021-02-04T00:00:00.000Z",
-    "user_id": 2
-}
-
-
+<br />
 DEMO LOGIN
 USERNAME - twallace
 PASSWORD - Password123!
