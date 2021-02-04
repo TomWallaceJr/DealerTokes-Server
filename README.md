@@ -32,7 +32,7 @@ Response:
     "name": "John Smith",
 ]
 
-GET /api/workday/2  
+GET /api/workday/2  <br />
 *returns all users workdays* 
 
 Response:
